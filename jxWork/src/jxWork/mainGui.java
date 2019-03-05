@@ -181,7 +181,6 @@ public class mainGui extends JFrame {
 			openDia.setVisible(true);
 			mulu = openDia.getDirectory();
 			name = openDia.getFile();
-			System.out.println(mulu+name);
 			text.append(name);
 			if(pand==1) 
 			{
