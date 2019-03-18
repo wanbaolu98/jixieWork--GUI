@@ -19,6 +19,7 @@ import javax.swing.text.Element;
 import javax.swing.text.TableView;
 import javax.swing.text.TableView.TableCell;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -38,6 +39,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -47,25 +49,19 @@ import javax.swing.*;
 
 public class newGui extends JFrame 
 {
-	private Color white;
 	private JTable table,table1,table2;
-	private JTextField textField_2;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textField_2,textField,textField_1,textField_3, textField_4,textField_5;
     private FileDialog openDia, saveDia;// 定义“打开、保存”对话框
     private jixieAction action;
     private JButton btnBrsowfe,button_1,button;
-    private JTextField textField_3;
-    private JTextField textField_4;
-    private JTextField textField_5;
-    private JPanel panel;
+    private JPanel panel,panel_1;
     private JRbutton jrbutton;
     private JRadioButton rdbtnNewRadioButton,rdbtnNewRadioButton_1;
     private myMouse MyMouse;
     private tableModel tabmodel1,tabmodel2,tabmodel3;
     private JButton btnNewButton;
     private JMenuItem mntmNewMenuItem_1,mntmNewMenuItem_2,mntmNewMenuItem_3,mntmNewMenuItem_4;
-    private JPanel panel_1;
+    private JLabel lblSxy,lblSxz,lblSyz;
 	/**
 	 * Launch the application.
 	 */
@@ -74,7 +70,7 @@ public class newGui extends JFrame
 			public void run() {
 				try {
 					newGui frame = new newGui();
-					frame.setVisible(true);
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -86,7 +82,6 @@ public class newGui extends JFrame
 	 * Create the frame.
 	 */
 	public newGui() {
-		
 		//设置窗口格式
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 50, 1100,900);
@@ -155,7 +150,7 @@ public class newGui extends JFrame
 		btnNewButton.addMouseListener(MyMouse);
 		panel_3.add(btnNewButton);
 		
-		JLabel lblSxy = new JLabel("Sxy:");
+		lblSxy = new JLabel("Sxy:");
 		lblSxy.setFont(new Font("宋体", Font.PLAIN, 19));
 		lblSxy.setBounds(211, 705, 133, 32);
 		panel_3.add(lblSxy);
@@ -164,7 +159,7 @@ public class newGui extends JFrame
 		panel_3.add(textField_3);
 		textField_3.setColumns(10);
 		
-		JLabel lblSxz = new JLabel("Sxz:");
+		lblSxz = new JLabel("Sxz:");
 		lblSxz.setFont(new Font("宋体", Font.PLAIN, 19));
 		panel_3.add(lblSxz);
 		
@@ -172,7 +167,7 @@ public class newGui extends JFrame
 		textField_4.setColumns(10);
 		panel_3.add(textField_4);
 		
-		JLabel lblSyz = new JLabel("Syz:");
+		lblSyz = new JLabel("Syz:");
 		lblSyz.setFont(new Font("宋体", Font.PLAIN, 19));
 		panel_3.add(lblSyz);
 		
@@ -255,14 +250,6 @@ public class newGui extends JFrame
 		panel_1 = new JPanel(null);
 		splitPane.setLeftComponent(panel_1);
 		panel_1.setBackground(Color.white);
-		
-		//定义一个树状菜单
-//		DefaultMutableTreeNode root=new DefaultMutableTreeNode("所有好友");
-//		JTree tree = new JTree(root);
-//		tree.setBounds(14, 13, 171, 291);
-//		panel_1.add(tree);
-		
-		
 	}
 	
 	//创建单选框的事件监听器
@@ -432,7 +419,15 @@ public class newGui extends JFrame
 				System.out.println("第2响应");
 				jf.showOpenDialog(newGui.this);
 				//定义一个树状菜单
+//				System.out.println(jf.getSelectedFile());
+				File myFile =jf.getSelectedFile();
+//				myFile.list();
 				DefaultMutableTreeNode root=new DefaultMutableTreeNode(jf.getName(jf.getSelectedFile()));
+				for(String i :myFile.list())
+				{
+						MutableTreeNode  oneUser=new DefaultMutableTreeNode(i);
+						root.add(oneUser);
+				}
 				JTree tree = new JTree(root);
 				tree.setBounds(14, 13, 171, 291);
 				panel_1.add(tree);
@@ -545,12 +540,30 @@ public class newGui extends JFrame
 	class myMouse extends MouseAdapter
 	{
 		Object[][] x,y,z;
+		double sxy,syz,sxz;
 		public void mouseClicked(MouseEvent e) 
 		{
+			try {
+				sxy = Double.valueOf(textField_3.getText());
+				sxz = Double.valueOf(textField_4.getText());
+				syz = Double.valueOf(textField_5.getText());
 				x=tabmodel1.getData();
 				y=tabmodel2.getData();
 				z=tabmodel3.getData();
+				System.out.println(sxy);
 				new algorithm(x,y,z);
+			} catch (NumberFormatException e2) {
+				JOptionPane.showMessageDialog(newGui.this, "输入数据不规范", "错误提示", JOptionPane.ERROR_MESSAGE);
+//				System.out.println("请检查数据");
+				textField_3.setText(String.valueOf(sxy));
+				textField_4.setText(String.valueOf(sxz));
+				textField_5.setText(String.valueOf(syz));
+			}catch (NullPointerException e2) {
+				// TODO: handle exception
+				JOptionPane.showMessageDialog(newGui.this, "没有导入数据", "错误提示", JOptionPane.ERROR_MESSAGE);
+			}
+			
+				
 		}
 	}
 		
