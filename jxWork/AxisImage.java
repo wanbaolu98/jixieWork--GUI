@@ -40,7 +40,7 @@ public class AxisImage {
     private int xSecant = 8, ySecant = 8;
     //--------------
     private String imageTitle = " ";
-    private String xTitle = "XÖáµÄÎ»ÖÃ", yTitle = "Îó²î/um";
+    private String xTitle = "Xè½´çš„ä½ç½®", yTitle = "è¯¯å·®/um";
     private String filePath;
     private ArrayList<Double> dataX, dataY;
  
@@ -62,7 +62,7 @@ public class AxisImage {
         return false;
     }
  
-    //³õÊ¼»¯Êı¾İ
+    //åˆå§‹åŒ–æ•°æ®
     private void initData() {
     	double[] x = {-800,-750,-700,-650,-600,-550,-500,-450,-400,-350,-300,-250,-200,-150,-100,-50,0};
     	double[] y = {-8.9,-8.1,-7.4,-6.9,-6.8,-7.5,-7.7,-8.5,-8.9,-9.1,-9.6,-11.2,-8.8,-7.4,-6.7,-6.7,-5.5};
@@ -80,28 +80,28 @@ public class AxisImage {
     }
  
     public String generate() {
-    	//¶¨ÒåÍ¼Ïñ»º³å
+    	//å®šä¹‰å›¾åƒç¼“å†²
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        //·µ»ØGraphics2D
+        //è¿”å›Graphics2D
         Graphics2D g = (Graphics2D) image.getGraphics();
         paintImage(g);
         return saveFile(filePath, image);
     }
  
     private void paintImage(Graphics2D g) {
-    	//ÉèÖÃÍ¼Æ¬äÖÈ¾Ëã·¨
+    	//è®¾ç½®å›¾ç‰‡æ¸²æŸ“ç®—æ³•
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //Ìî³ä±³¾°
+        //å¡«å……èƒŒæ™¯
         g.setColor(Color.WHITE);
-        //Ìî³äÄÚ²¿
+        //å¡«å……å†…éƒ¨
         g.fillRect(0, 0, width, height);
         g.setColor(Color.BLACK);
-        //ÉèÖÃxy×ø±ê×î´óºÍ×îĞ¡Öµ
+        //è®¾ç½®xyåæ ‡æœ€å¤§å’Œæœ€å°å€¼
         calculateMaxMin();
-        //¼ÆËã²¢Ğ£Õı×ø±êÖáµÄÆğÊ¼Öµ¼°Æä·Ö¸ô
+        //è®¡ç®—å¹¶æ ¡æ­£åæ ‡è½´çš„èµ·å§‹å€¼åŠå…¶åˆ†éš”
         adjustMaxMin();
  
-        //¼ÆËã×ø±êÖá¼°±ß½ç·¶Î§
+        //è®¡ç®—åæ ‡è½´åŠè¾¹ç•ŒèŒƒå›´
         calculateAxisLength();
  
         drawImageTitle(g);
@@ -167,18 +167,18 @@ public class AxisImage {
     private void drawXAxis(Graphics2D g0) {
         Graphics2D gx = (Graphics2D) g0.create();
  
-        //¼ÆËãÃ¿¸ö×ø±êÖá·Ö¸îÏßÖ®¼äµÄ¼ä¾à
+        //è®¡ç®—æ¯ä¸ªåæ ‡è½´åˆ†å‰²çº¿ä¹‹é—´çš„é—´è·
         int xInterLen = xAxisLength / xSecant;
  
         for (int i = 0; i < xSecant + 1; i++) {
-            //»­XÖáÉÏÃæÒ»¸öÒ»¸öĞ¡µÄ·Ö¸îÏß
+            //ç”»Xè½´ä¸Šé¢ä¸€ä¸ªä¸€ä¸ªå°çš„åˆ†å‰²çº¿
             gx.setColor(COLOR_AXIS);
             gx.drawLine(leftBorderWidth + i * xInterLen,
                     topBorderHeight + yAxisLength,
                     leftBorderWidth + i * xInterLen,
                     topBorderHeight + yAxisLength + AXIS_HEIGHT);
  
-            //»­Ò»¸öÒ»¸öĞ¡µÄ·Ö¸îÏßËù±íÊ¾µÄÖµ
+            //ç”»ä¸€ä¸ªä¸€ä¸ªå°çš„åˆ†å‰²çº¿æ‰€è¡¨ç¤ºçš„å€¼
             gx.setColor(COLOR_TITLE);
             String axisText = format.format(xMin + i * xInterval);
             TextLayout layout = new TextLayout(axisText, gx.getFont(), new FontRenderContext(null, false, false));
@@ -187,7 +187,7 @@ public class AxisImage {
                     topBorderHeight + yAxisLength + AXIS_HEIGHT + layout.getAscent() + AXIS_TEXT_INTERVAL);
         }
  
-        //»­XÖá·½ÏòÉÏÏÂÁ½ÌõÖáÏß
+        //ç”»Xè½´æ–¹å‘ä¸Šä¸‹ä¸¤æ¡è½´çº¿
         gx.setColor(COLOR_LINE);
         gx.drawLine(leftBorderWidth, topBorderHeight, leftBorderWidth + xAxisLength, topBorderHeight);
         gx.drawLine(leftBorderWidth, topBorderHeight + yAxisLength, leftBorderWidth + xAxisLength, topBorderHeight + yAxisLength);
@@ -196,24 +196,24 @@ public class AxisImage {
  
     private void drawYAxis(Graphics2D g0) {
         Graphics2D gy = (Graphics2D) g0.create();
-        //¼ÆËãÃ¿¸ö×ø±êÖá·Ö¸îÏßÖ®¼äµÄ¼ä¾à
+        //è®¡ç®—æ¯ä¸ªåæ ‡è½´åˆ†å‰²çº¿ä¹‹é—´çš„é—´è·
         int yInterLen = yAxisLength / ySecant;
  
         for (int i = 0; i < ySecant + 1; i++) {
-            //»­YÖáÉÏÃæÒ»¸öÒ»¸öĞ¡µÄ·Ö¸îÏß
+            //ç”»Yè½´ä¸Šé¢ä¸€ä¸ªä¸€ä¸ªå°çš„åˆ†å‰²çº¿
             gy.setColor(COLOR_AXIS);
             gy.drawLine(leftBorderWidth - AXIS_HEIGHT,
                     (int) (topBorderHeight + yAxisLength - i * yInterLen),
                     leftBorderWidth,
                     (int) (topBorderHeight + yAxisLength - i * yInterLen));
-            //»­YÖáÉÏÃæ×ø±êÖáÖĞ¼äµÄË®Æ½µÄ·Ö¸îÏß
+            //ç”»Yè½´ä¸Šé¢åæ ‡è½´ä¸­é—´çš„æ°´å¹³çš„åˆ†å‰²çº¿
             if (i != 0 && i != ySecant) {
                 gy.drawLine(leftBorderWidth,
                 (int) (topBorderHeight + yAxisLength - i * yInterLen),
                 leftBorderWidth + xAxisLength,
                 (int) (topBorderHeight + yAxisLength - i * yInterLen));
             }
-            //»­Ò»¸öÒ»¸öĞ¡µÄ·Ö¸îÏßËù±íÊ¾µÄÖµ
+            //ç”»ä¸€ä¸ªä¸€ä¸ªå°çš„åˆ†å‰²çº¿æ‰€è¡¨ç¤ºçš„å€¼
             gy.setColor(COLOR_TITLE);
             gy.setFont(FONT_DEFAULT);
             String axisText = format.format(yMax - i * yInterval);
@@ -222,7 +222,7 @@ public class AxisImage {
                     leftBorderWidth - AXIS_HEIGHT - AXIS_TEXT_INTERVAL - (int) layout.getBounds().getWidth(),
                     topBorderHeight + i * yInterLen + (int) layout.getDescent());
         }
-        //»­YÖá·½Ïò×óÓÒÁ½ÌõÖáÏß
+        //ç”»Yè½´æ–¹å‘å·¦å³ä¸¤æ¡è½´çº¿
         gy.setColor(COLOR_LINE);
         gy.drawLine(leftBorderWidth, topBorderHeight, leftBorderWidth, topBorderHeight + yAxisLength);
         gy.drawLine(leftBorderWidth + xAxisLength, topBorderHeight,
@@ -278,7 +278,7 @@ public class AxisImage {
         return filePath;
     }
  
-    //ÉèÖÃxy×ø±ê×î´óÖµºÍ×îĞ¡Öµ
+    //è®¾ç½®xyåæ ‡æœ€å¤§å€¼å’Œæœ€å°å€¼
     private void calculateMaxMin() {
         int length = dataX.size();
         if (length != 0) {
@@ -313,8 +313,8 @@ public class AxisImage {
     }
  
     private void calculateAxisLength() {
-        //³õ²½¼ÆËã±ß½çÀï×ø±êÖáµÄ¾àÀë
-        //ËÄÖÜ¿Õ°×+×ø±êÖá±êÌâ¸ß¶È£¬×ø±êÖá±êÌâºÍÍ¼Æ¬±êÌâ¸ß¶ÈÒ»ÖÂ
+        //åˆæ­¥è®¡ç®—è¾¹ç•Œé‡Œåæ ‡è½´çš„è·ç¦»
+        //å››å‘¨ç©ºç™½+åæ ‡è½´æ ‡é¢˜é«˜åº¦ï¼Œåæ ‡è½´æ ‡é¢˜å’Œå›¾ç‰‡æ ‡é¢˜é«˜åº¦ä¸€è‡´
         TextLayout layout1 = new TextLayout(xTitle, FONT_TITLE, new FontRenderContext(null, false, false));
         int borderWidth1 = (int) Math.ceil(layout1.getAscent() + layout1.getDescent()) + MARGIN * 2;
         leftBorderWidth = borderWidth1;
@@ -322,14 +322,14 @@ public class AxisImage {
         topBorderHeight = borderWidth1;
         bottomBorderHeight = borderWidth1;
  
-        //ÏÂ·½ÔÙ¼ÓÉÏ×ø±êÖáÉÏµÄ¸÷Ğ¡·Ö¸îÏßÉÏÖµµÄ¸ß¶È
+        //ä¸‹æ–¹å†åŠ ä¸Šåæ ‡è½´ä¸Šçš„å„å°åˆ†å‰²çº¿ä¸Šå€¼çš„é«˜åº¦
         TextLayout layout2 = new TextLayout("1980", FONT_DEFAULT, new FontRenderContext(null, false, false));
         int borderWidth2 = (int) Math.ceil(layout2.getAscent() + layout2.getDescent()) + AXIS_TEXT_INTERVAL * 2;
         bottomBorderHeight += borderWidth2;
  
  
-        //×ó·½Òª¼ÓÉÏ¸÷¸öÊı×ÖµÄ×î´ó¿í¶È
-        //ÕÒµ½×î¿íµÄÊı×Ö£¬È»ºó¼ÆËãÆä¸ß¶È
+        //å·¦æ–¹è¦åŠ ä¸Šå„ä¸ªæ•°å­—çš„æœ€å¤§å®½åº¦
+        //æ‰¾åˆ°æœ€å®½çš„æ•°å­—ï¼Œç„¶åè®¡ç®—å…¶é«˜åº¦
         String maxStr = format.format(yMin);
         for (int i = 1; i < ySecant + 1; i++) {
             String str = format.format(yMin + i * yInterval);
@@ -342,11 +342,11 @@ public class AxisImage {
         leftBorderWidth += borderWidth3;
  
  
-        //³õ²½¼ÆËã×ø±êÖáµÄ³¤¶È
+        //åˆæ­¥è®¡ç®—åæ ‡è½´çš„é•¿åº¦
         yAxisLength = height - topBorderHeight - bottomBorderHeight;
         xAxisLength = width - leftBorderWidth - rightBorderWidth;
  
-        //¶Ô×ø±êÖáºÍ±ß½çÊı×Ö½øĞĞĞ£Õı
+        //å¯¹åæ ‡è½´å’Œè¾¹ç•Œæ•°å­—è¿›è¡Œæ ¡æ­£
         int lessX = xAxisLength % xSecant;
         xAxisLength -= lessX;
         bottomBorderHeight += lessX;
@@ -357,7 +357,7 @@ public class AxisImage {
     }
  
     public static void main(String[] args) {
-    	//Ö÷º¯Êı
+    	//ä¸»å‡½æ•°
 //    	1
     	double[] x = {-800,-750,-700,-650,-600,-550,-500,-450,-400,-350,-300,-250,-200,-150,-100,-50,0};
     	double[] y = {-8.9,-8.1,-7.4,-6.9,-6.8,-7.5,-7.7,-8.5,-8.9,-9.1,-9.6,-11.2,-8.8,-7.4,-6.7,-6.7,-5.5};
@@ -402,19 +402,19 @@ public class AxisImage {
         }
  
         private void adjust2() {
-            //1 ¼ÆËã¼ä¸ô´óĞ¡
+            //1 è®¡ç®—é—´éš”å¤§å°
             interval = (max - min) / secant;
-            //2 ¿´¿´ÊÇ10µÄ¶àÉÙ´Î·½£¨È¡Õû£©£¬Í¬Ê±¼ÆËã³ö10µÄµ±Ç°´Î·½µÄÒ»°ë×÷Îª±ê×¼ÖµÓÃÓÚĞ£Õı
+            //2 çœ‹çœ‹æ˜¯10çš„å¤šå°‘æ¬¡æ–¹ï¼ˆå–æ•´ï¼‰ï¼ŒåŒæ—¶è®¡ç®—å‡º10çš„å½“å‰æ¬¡æ–¹çš„ä¸€åŠä½œä¸ºæ ‡å‡†å€¼ç”¨äºæ ¡æ­£
             double m10 = Math.floor(Math.log10(interval));
             double standardValue = 5 * Math.pow(10, m10 - 1);
-            //3 ¼ä¸ôÖµÈ¡³ö×î¸ßÎ»Ê£ÏÂµÄÓàÊı
+            //3 é—´éš”å€¼å–å‡ºæœ€é«˜ä½å‰©ä¸‹çš„ä½™æ•°
             double yInterval1 = interval % Math.pow(10, Math.floor(m10));
-            //4 ¶ÔintervalµÄÖµ½øĞĞĞ£Õı
-            //±ÈÈçm10=2£¬ÄÇÃ´standardValue = 50
-            //¶ÔÓÚÓàÊı£º
-            //(a)µ±´óÓÚ50Ê±£¬ÔÚ50-100µÄÇø¼äÄÚÉáÈë£¨75ÒÔÏÂÉáµ½50£¬75¼°ÆäÒÔÉÏÈëµ½100£©
-            //(b)µ±Ğ¡ÓÚ50ÊÇ£¬ÔÚ0-50µÄÇø¼äÄÚÉáÈë£¨25ÒÔÏÂÉáµ½0£¬25¼°ÆäÒÔÉÏÈëµ½50£©
-            //(c)Í¬Ê±£¬Èç¹ûÊÇÉáÈ¥£¬secant¼ä¸ôÊı¼Ó1
+            //4 å¯¹intervalçš„å€¼è¿›è¡Œæ ¡æ­£
+            //æ¯”å¦‚m10=2ï¼Œé‚£ä¹ˆstandardValue = 50
+            //å¯¹äºä½™æ•°ï¼š
+            //(a)å½“å¤§äº50æ—¶ï¼Œåœ¨50-100çš„åŒºé—´å†…èˆå…¥ï¼ˆ75ä»¥ä¸‹èˆåˆ°50ï¼Œ75åŠå…¶ä»¥ä¸Šå…¥åˆ°100ï¼‰
+            //(b)å½“å°äº50æ˜¯ï¼Œåœ¨0-50çš„åŒºé—´å†…èˆå…¥ï¼ˆ25ä»¥ä¸‹èˆåˆ°0ï¼Œ25åŠå…¶ä»¥ä¸Šå…¥åˆ°50ï¼‰
+            //(c)åŒæ—¶ï¼Œå¦‚æœæ˜¯èˆå»ï¼Œsecanté—´éš”æ•°åŠ 1
             double d;
             if (yInterval1 > standardValue) {
 //            System.out.println(">");
@@ -440,19 +440,19 @@ public class AxisImage {
         }
  
         private void adjust() {
-            //1 ³õ²½¼ÆËã´ó¸ÅÇø·Ö¶àÉÙ¸öÇø¼ä£¬Èç¹ûÇø¼ä´óÓÚ10£¬ÏòÉÏÈ¡Ò»°ë
+            //1 åˆæ­¥è®¡ç®—å¤§æ¦‚åŒºåˆ†å¤šå°‘ä¸ªåŒºé—´ï¼Œå¦‚æœåŒºé—´å¤§äº10ï¼Œå‘ä¸Šå–ä¸€åŠ
             double scope = max - min;
             secant = (int) (scope / (5 * Math.pow(10, Math.floor(Math.log10(scope)) - 1)));
             if (secant > 10) {
                 secant = (secant + 1) / 2;
             }
  
-            //2 ¼ÆËã¼ä¸ô´óĞ¡
+            //2 è®¡ç®—é—´éš”å¤§å°
             interval = (max - min) / secant;
-            //3 ¿´¿´ÊÇ10µÄ¶àÉÙ´Î·½£¨È¡Õû£©£¬Í¬Ê±¼ÆËã³ö10µÄµ±Ç°´Î·½µÄÒ»°ë×÷Îª±ê×¼ÖµÓÃÓÚĞ£Õı
+            //3 çœ‹çœ‹æ˜¯10çš„å¤šå°‘æ¬¡æ–¹ï¼ˆå–æ•´ï¼‰ï¼ŒåŒæ—¶è®¡ç®—å‡º10çš„å½“å‰æ¬¡æ–¹çš„ä¸€åŠä½œä¸ºæ ‡å‡†å€¼ç”¨äºæ ¡æ­£
             double m10 = Math.floor(Math.log10(interval));
             double standardValue = 5 * Math.pow(10, m10 - 1);
-            //4 ¼ä¸ôÖµÈ¡³ö×î¸ßÎ»Ê£ÏÂµÄÓàÊı
+            //4 é—´éš”å€¼å–å‡ºæœ€é«˜ä½å‰©ä¸‹çš„ä½™æ•°
             double yInterval1 = 0;
             if (m10 > 0) {
                 yInterval1 = interval % Math.pow(10, Math.floor(m10));
@@ -460,12 +460,12 @@ public class AxisImage {
                 double temp = Math.pow(10, -m10);
                 yInterval1 = (interval * temp) % (Math.pow(10, Math.floor(m10)) * temp) / temp;
             }
-            //5 ¶ÔintervalµÄÖµ½øĞĞĞ£Õı
-            //±ÈÈçm10=2£¬ÄÇÃ´standardValue = 50
-            //¶ÔÓÚÓàÊı£º
-            //(a)µ±´óÓÚ50Ê±£¬ÔÚ50-100µÄÇø¼äÄÚÉáÈë£¨75ÒÔÏÂÉáµ½50£¬75¼°ÆäÒÔÉÏÈëµ½100£©
-            //(b)µ±Ğ¡ÓÚ50ÊÇ£¬ÔÚ0-50µÄÇø¼äÄÚÉáÈë£¨25ÒÔÏÂÉáµ½0£¬25¼°ÆäÒÔÉÏÈëµ½50£©
-            //(c)Í¬Ê±£¬Èç¹ûÊÇÉáÈ¥£¬secant¼ä¸ôÊı¼Ó1
+            //5 å¯¹intervalçš„å€¼è¿›è¡Œæ ¡æ­£
+            //æ¯”å¦‚m10=2ï¼Œé‚£ä¹ˆstandardValue = 50
+            //å¯¹äºä½™æ•°ï¼š
+            //(a)å½“å¤§äº50æ—¶ï¼Œåœ¨50-100çš„åŒºé—´å†…èˆå…¥ï¼ˆ75ä»¥ä¸‹èˆåˆ°50ï¼Œ75åŠå…¶ä»¥ä¸Šå…¥åˆ°100ï¼‰
+            //(b)å½“å°äº50æ˜¯ï¼Œåœ¨0-50çš„åŒºé—´å†…èˆå…¥ï¼ˆ25ä»¥ä¸‹èˆåˆ°0ï¼Œ25åŠå…¶ä»¥ä¸Šå…¥åˆ°50ï¼‰
+            //(c)åŒæ—¶ï¼Œå¦‚æœæ˜¯èˆå»ï¼Œsecanté—´éš”æ•°åŠ 1
             double d = 0;
             if (yInterval1 == 0 || yInterval1 == standardValue) {
             } else if (yInterval1 > standardValue) {
@@ -485,8 +485,8 @@ public class AxisImage {
                     interval = (Math.floor(interval / Math.pow(10, m10)) + 0.5) * Math.pow(10, m10);
                 }
             }
-            //6 ¸ù¾İĞÂ¼ÆËãµÄintervalÖØĞÂĞ£Õımin¡¢maxµÄÖµ
-            //  Í¬Ê±ĞèÒªÑéÖ¤Ëù»®·Ö¼ä¸ô×ÜÊıÊÇ·ñÄÜ½«Ô­Ê¼Êı¾İÈ«²¿°üº¬£¬·ñÔòÔÙÌí¼ÓÒ»¸ö¼ä¸ôÇø¼ä
+            //6 æ ¹æ®æ–°è®¡ç®—çš„intervalé‡æ–°æ ¡æ­£minã€maxçš„å€¼
+            //  åŒæ—¶éœ€è¦éªŒè¯æ‰€åˆ’åˆ†é—´éš”æ€»æ•°æ˜¯å¦èƒ½å°†åŸå§‹æ•°æ®å…¨éƒ¨åŒ…å«ï¼Œå¦åˆ™å†æ·»åŠ ä¸€ä¸ªé—´éš”åŒºé—´
             min = Math.floor(min / interval) * interval;
             max = Math.ceil(max / interval) * interval;
             if (interval * secant < scope) {
